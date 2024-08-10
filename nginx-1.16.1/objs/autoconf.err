@@ -1,0 +1,729 @@
+
+
+----------------------------------------
+checking for C compiler
+
+
+----------------------------------------
+checking for -Wl,-E switch
+
+ld: unknown options: -E 
+clang: error: linker command failed with exit code 1 (use -v to see invocation)
+----------
+
+#include <sys/types.h>
+
+
+
+int main(void) {
+    ;
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -o objs/autotest objs/autotest.c -Wl,-E
+----------
+
+----------------------------------------
+checking for gcc builtin atomic operations
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for C99 variadic macros
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for gcc variadic macros
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for gcc builtin 64 bit byteswap
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for unistd.h
+
+
+----------------------------------------
+checking for inttypes.h
+
+
+----------------------------------------
+checking for limits.h
+
+
+----------------------------------------
+checking for sys/filio.h
+
+
+----------------------------------------
+checking for sys/param.h
+
+
+----------------------------------------
+checking for sys/mount.h
+
+
+----------------------------------------
+checking for sys/statvfs.h
+
+
+----------------------------------------
+checking for crypt.h
+
+objs/autotest.c:3:10: fatal error: 'crypt.h' file not found
+#include <crypt.h>
+         ^~~~~~~~~
+1 error generated.
+----------
+
+#include <sys/param.h>
+#include <crypt.h>
+
+int main(void) {
+    return 0;
+}
+
+----------
+cc -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for kqueue's EVFILT_TIMER
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for Darwin 64-bit kqueue millisecond timeout bug
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for sendfile()
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for atomic(3)
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:8:24: warning: 'OSAtomicCompareAndSwap32Barrier' is deprecated: first deprecated in macOS 10.12 - Use atomic_compare_exchange_strong() from <stdatomic.h> instead [-Wdeprecated-declarations]
+                  if (!OSAtomicCompareAndSwap32Barrier(0, 1, &lock)) return 1;
+                       ^
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/libkern/OSAtomicDeprecated.h:520:9: note: 'OSAtomicCompareAndSwap32Barrier' has been explicitly marked deprecated here
+bool    OSAtomicCompareAndSwap32Barrier( int32_t __oldValue, int32_t __newValue, volatile int32_t *__theValue );
+        ^
+1 warning generated.
+
+----------------------------------------
+checking for poll()
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for /dev/poll
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:4:10: fatal error: 'sys/devpoll.h' file not found
+#include <sys/devpoll.h>
+         ^~~~~~~~~~~~~~~
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/devpoll.h>
+
+int main(void) {
+    int  n, dp; struct dvpoll  dvp;
+                  dp = 0;
+                  dvp.dp_fds = NULL;
+                  dvp.dp_nfds = 0;
+                  dvp.dp_timeout = 0;
+                  n = ioctl(dp, DP_POLL, &dvp);
+                  if (n == -1) return 1;
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for crypt()
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for F_READAHEAD
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:7:14: error: use of undeclared identifier 'F_READAHEAD'
+    fcntl(0, F_READAHEAD, 1);;
+             ^
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+int main(void) {
+    fcntl(0, F_READAHEAD, 1);;
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for posix_fadvise()
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:7:5: error: call to undeclared function 'posix_fadvise'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL);;
+    ^
+objs/autotest.c:7:28: error: use of undeclared identifier 'POSIX_FADV_SEQUENTIAL'
+    posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL);;
+                           ^
+2 errors generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+int main(void) {
+    posix_fadvise(0, 0, 0, POSIX_FADV_SEQUENTIAL);;
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for O_DIRECT
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:7:23: error: use of undeclared identifier 'O_DIRECT'
+    fcntl(0, F_SETFL, O_DIRECT);;
+                      ^
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <fcntl.h>
+
+int main(void) {
+    fcntl(0, F_SETFL, O_DIRECT);;
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for F_NOCACHE
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for directio()
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:8:5: error: call to undeclared function 'directio'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    directio(0, DIRECTIO_ON);;
+    ^
+objs/autotest.c:8:17: error: use of undeclared identifier 'DIRECTIO_ON'
+    directio(0, DIRECTIO_ON);;
+                ^
+2 errors generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/types.h>
+                  #include <sys/fcntl.h>
+
+int main(void) {
+    directio(0, DIRECTIO_ON);;
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for statfs()
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for statvfs()
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for dlopen()
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for sched_yield()
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for sched_setaffinity()
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:7:5: error: use of undeclared identifier 'cpu_set_t'
+    cpu_set_t mask;
+    ^
+objs/autotest.c:8:19: error: call to undeclared function 'CPU_ZERO'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+                  CPU_ZERO(&mask);
+                  ^
+objs/autotest.c:8:29: error: use of undeclared identifier 'mask'; did you mean 'main'?
+                  CPU_ZERO(&mask);
+                            ^~~~
+                            main
+objs/autotest.c:6:5: note: 'main' declared here
+int main(void) {
+    ^
+objs/autotest.c:9:19: error: call to undeclared function 'sched_setaffinity'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+                  sched_setaffinity(0, sizeof(cpu_set_t), &mask);
+                  ^
+objs/autotest.c:9:47: error: use of undeclared identifier 'cpu_set_t'
+                  sched_setaffinity(0, sizeof(cpu_set_t), &mask);
+                                              ^
+objs/autotest.c:9:60: error: use of undeclared identifier 'mask'; did you mean 'main'?
+                  sched_setaffinity(0, sizeof(cpu_set_t), &mask);
+                                                           ^~~~
+                                                           main
+objs/autotest.c:6:5: note: 'main' declared here
+int main(void) {
+    ^
+6 errors generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sched.h>
+
+int main(void) {
+    cpu_set_t mask;
+                  CPU_ZERO(&mask);
+                  sched_setaffinity(0, sizeof(cpu_set_t), &mask);
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for SO_SETFIB
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:7:31: error: use of undeclared identifier 'SO_SETFIB'
+    setsockopt(0, SOL_SOCKET, SO_SETFIB, NULL, 0);
+                              ^
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/socket.h>
+
+int main(void) {
+    setsockopt(0, SOL_SOCKET, SO_SETFIB, NULL, 0);
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for SO_REUSEPORT
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for SO_ACCEPTFILTER
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:7:31: error: use of undeclared identifier 'SO_ACCEPTFILTER'
+    setsockopt(0, SOL_SOCKET, SO_ACCEPTFILTER, NULL, 0);
+                              ^
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/socket.h>
+
+int main(void) {
+    setsockopt(0, SOL_SOCKET, SO_ACCEPTFILTER, NULL, 0);
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for SO_BINDANY
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:7:31: error: use of undeclared identifier 'SO_BINDANY'
+    setsockopt(0, SOL_SOCKET, SO_BINDANY, NULL, 0);
+                              ^
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/socket.h>
+
+int main(void) {
+    setsockopt(0, SOL_SOCKET, SO_BINDANY, NULL, 0);
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for IP_TRANSPARENT
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:8:31: error: use of undeclared identifier 'IP_TRANSPARENT'
+    setsockopt(0, IPPROTO_IP, IP_TRANSPARENT, NULL, 0);
+                              ^
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/socket.h>
+                  #include <netinet/in.h>
+
+int main(void) {
+    setsockopt(0, IPPROTO_IP, IP_TRANSPARENT, NULL, 0);
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for IP_BINDANY
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:8:31: error: use of undeclared identifier 'IP_BINDANY'
+    setsockopt(0, IPPROTO_IP, IP_BINDANY, NULL, 0);
+                              ^
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/socket.h>
+                  #include <netinet/in.h>
+
+int main(void) {
+    setsockopt(0, IPPROTO_IP, IP_BINDANY, NULL, 0);
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for IP_BIND_ADDRESS_NO_PORT
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:8:31: error: use of undeclared identifier 'IP_BIND_ADDRESS_NO_PORT'
+    setsockopt(0, IPPROTO_IP, IP_BIND_ADDRESS_NO_PORT, NULL, 0);
+                              ^
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/socket.h>
+                  #include <netinet/in.h>
+
+int main(void) {
+    setsockopt(0, IPPROTO_IP, IP_BIND_ADDRESS_NO_PORT, NULL, 0);
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for IP_RECVDSTADDR
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for IP_SENDSRCADDR
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:8:31: error: use of undeclared identifier 'IP_SENDSRCADDR'
+    setsockopt(0, IPPROTO_IP, IP_SENDSRCADDR, NULL, 0);
+                              ^
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/socket.h>
+                  #include <netinet/in.h>
+
+int main(void) {
+    setsockopt(0, IPPROTO_IP, IP_SENDSRCADDR, NULL, 0);
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for IP_PKTINFO
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for IPV6_RECVPKTINFO
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for TCP_DEFER_ACCEPT
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:9:32: error: use of undeclared identifier 'TCP_DEFER_ACCEPT'
+    setsockopt(0, IPPROTO_TCP, TCP_DEFER_ACCEPT, NULL, 0);
+                               ^
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/socket.h>
+                  #include <netinet/in.h>
+                  #include <netinet/tcp.h>
+
+int main(void) {
+    setsockopt(0, IPPROTO_TCP, TCP_DEFER_ACCEPT, NULL, 0);
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for TCP_KEEPIDLE
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:9:32: error: use of undeclared identifier 'TCP_KEEPIDLE'
+    setsockopt(0, IPPROTO_TCP, TCP_KEEPIDLE, NULL, 0);
+                               ^
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/socket.h>
+                  #include <netinet/in.h>
+                  #include <netinet/tcp.h>
+
+int main(void) {
+    setsockopt(0, IPPROTO_TCP, TCP_KEEPIDLE, NULL, 0);
+                  setsockopt(0, IPPROTO_TCP, TCP_KEEPINTVL, NULL, 0);
+                  setsockopt(0, IPPROTO_TCP, TCP_KEEPCNT, NULL, 0);
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for TCP_FASTOPEN
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+
+----------------------------------------
+checking for TCP_INFO
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:9:24: error: invalid application of 'sizeof' to an incomplete type 'struct tcp_info'
+    socklen_t optlen = sizeof(struct tcp_info);
+                       ^     ~~~~~~~~~~~~~~~~~
+objs/autotest.c:9:38: note: forward declaration of 'struct tcp_info'
+    socklen_t optlen = sizeof(struct tcp_info);
+                                     ^
+objs/autotest.c:10:35: error: variable has incomplete type 'struct tcp_info'
+                  struct tcp_info ti;
+                                  ^
+objs/autotest.c:9:38: note: forward declaration of 'struct tcp_info'
+    socklen_t optlen = sizeof(struct tcp_info);
+                                     ^
+objs/autotest.c:15:46: error: use of undeclared identifier 'TCP_INFO'
+                  getsockopt(0, IPPROTO_TCP, TCP_INFO, &ti, &optlen);
+                                             ^
+3 errors generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/socket.h>
+                  #include <netinet/in.h>
+                  #include <netinet/tcp.h>
+
+int main(void) {
+    socklen_t optlen = sizeof(struct tcp_info);
+                  struct tcp_info ti;
+                  ti.tcpi_rtt = 0;
+                  ti.tcpi_rttvar = 0;
+                  ti.tcpi_snd_cwnd = 0;
+                  ti.tcpi_rcv_space = 0;
+                  getsockopt(0, IPPROTO_TCP, TCP_INFO, &ti, &optlen);
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for accept4()
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:7:5: error: call to undeclared function 'accept4'; ISO C99 and later do not support implicit function declarations [-Wimplicit-function-declaration]
+    accept4(0, NULL, NULL, SOCK_NONBLOCK);
+    ^
+objs/autotest.c:7:5: note: did you mean 'accept'?
+/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/usr/include/sys/socket.h:720:9: note: 'accept' declared here
+int     accept(int, struct sockaddr * __restrict, socklen_t * __restrict)
+        ^
+objs/autotest.c:7:28: error: use of undeclared identifier 'SOCK_NONBLOCK'
+    accept4(0, NULL, NULL, SOCK_NONBLOCK);
+                           ^
+2 errors generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <sys/socket.h>
+
+int main(void) {
+    accept4(0, NULL, NULL, SOCK_NONBLOCK);
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for kqueue AIO support
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:8:56: error: use of undeclared identifier 'SIGEV_KEVENT'
+                      iocb.aio_sigevent.sigev_notify = SIGEV_KEVENT;
+                                                       ^
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <aio.h>
+
+int main(void) {
+    struct aiocb  iocb;
+                      iocb.aio_sigevent.sigev_notify = SIGEV_KEVENT;
+                      (void) aio_read(&iocb);
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for Linux AIO support
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:4:10: fatal error: 'linux/aio_abi.h' file not found
+#include <linux/aio_abi.h>
+         ^~~~~~~~~~~~~~~~~
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <linux/aio_abi.h>
+                          #include <sys/eventfd.h>
+
+int main(void) {
+    struct iocb  iocb;
+                          iocb.aio_lio_opcode = IOCB_CMD_PREAD;
+                          iocb.aio_flags = IOCB_FLAG_RESFD;
+                          iocb.aio_resfd = -1;
+                          (void) iocb;
+                          (void) eventfd(0, 0);
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
+
+----------------------------------------
+checking for Linux AIO support (SYS_eventfd)
+
+clang: warning: argument unused during compilation: '-mavx2' [-Wunused-command-line-argument]
+objs/autotest.c:4:10: fatal error: 'linux/aio_abi.h' file not found
+#include <linux/aio_abi.h>
+         ^~~~~~~~~~~~~~~~~
+1 error generated.
+----------
+
+#include <sys/types.h>
+#include <unistd.h>
+#include <linux/aio_abi.h>
+                          #include <sys/syscall.h>
+
+int main(void) {
+    struct iocb  iocb;
+                          iocb.aio_lio_opcode = IOCB_CMD_PREAD;
+                          iocb.aio_flags = IOCB_FLAG_RESFD;
+                          iocb.aio_resfd = -1;
+                          (void) iocb;
+                          (void) SYS_eventfd;
+    return 0;
+}
+
+----------
+cc -pipe -DNGX_VOD_MAX_TRACK_COUNT=256 -mavx2 -D__APPLE_USE_RFC_3542 -o objs/autotest objs/autotest.c
+----------
